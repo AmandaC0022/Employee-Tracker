@@ -12,7 +12,7 @@ VALUES
     ("Accountant", 80000, 4), 
     ("Salesperson", 60000, 3); 
 
-INSERT INTO employee (first_name, last_name, role_id)
+INSERT INTO employees (first_name, last_name, role_id)
 VALUES 
     ("Amanda", "Morgan", 2), 
     ("Chris", "Morgan", 4), 
