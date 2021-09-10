@@ -2,33 +2,76 @@ const inquirer = require('inquirer');
 const fs = require('fs');
 const cTable = require('console.table');
 
-inquirer
-  .prompt([
-    {
-      type: 'input',
-      name: 'name',
-      message: 'What is your name?',
-    },
-    {
-      type: 'checkbox',
-      message: 'What languages do you know?',
-      name: 'stack',
-      choices: ['HTML', 'CSS', 'JavaScript', 'MySQL'],
-    },
-    {
-      type: 'list',
-      message: 'What is your preferred method of communication?',
-      name: 'contact',
-      choices: ['email', 'phone', 'telekinesis'],
-    },
-  ])
-  .then((data) => {
-    const filename = `${data.name.toLowerCase().split(' ').join('')}.json`;
+mainScreen = () => { 
+    inquirer
+    .prompt([
+        {
+        type: 'list',
+        name: 'toDo',
+        message: 'What would you like to do?',
+        choices: ['View All Employees', 'Add Employee', 'Update Employee Role', 'View All Roles', 'Add Role', 'View All Departments', 'Add Department', 'Quit']
+        }
+    ]).then((userChoice) => {
+        switch(userChoice.toDo) {
+            case "View All Employees": 
+                viewAllEmployees(); 
+                break; 
+            case "Add Employee":
+                addEmployee(); 
+                break; 
+            case "Update Employee Role":
+                updateEmployee(); 
+                break; 
+            case "View All Roles":
+                viewAllRoles(); 
+                break; 
+            case "Add Role":
+                addRole(); 
+                break;
+            case "View All Departments":
+                viewAllDepartments(); 
+                break; 
+            case "Add Department":
+                addDepartment(); 
+                break; 
+            case 'Quit': 
+                console.log('Thank you for using the Employee Tracker. Have a great day!'); 
+                break; 
+        }
+    }); 
+}; 
 
-    fs.writeFile(filename, JSON.stringify(data, null, '\t'), (err) =>
-      err ? console.log(err) : console.log('Success!')
-    );
-  });
+viewAllEmployees = () => {
+    mainScreen(); 
+}; 
+
+addEmployee = () => {
+    mainScreen();
+}; 
+
+updateEmployee = () => {
+    mainScreen();
+}; 
+
+viewAllRoles = () => {
+    mainScreen();
+}; 
+
+addRole = () => {
+    mainScreen();
+}; 
+
+viewAllDepartments = () => {
+    //this displays the department table 
+    mainScreen();
+}; 
+
+addDepartment = () => {
+    mainScreen();
+}; 
+
+//initializes the app 
+mainScreen(); 
 
 //console table syntax 
 //   console.table([
