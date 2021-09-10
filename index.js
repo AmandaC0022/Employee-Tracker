@@ -1,5 +1,6 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
+const cTable = require('console.table');
 
 inquirer
   .prompt([
@@ -28,3 +29,20 @@ inquirer
       err ? console.log(err) : console.log('Success!')
     );
   });
+
+//console table syntax 
+//   console.table([
+//     {
+//       name: 'foo',
+//       age: 10
+//     }, {
+//       name: 'bar',
+//       age: 20
+//     }
+//   ]);
+  
+//   // prints
+//   name  age
+//   ----  ---
+//   foo   10
+//   bar   20
