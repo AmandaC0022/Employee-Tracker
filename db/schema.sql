@@ -1,18 +1,30 @@
-DROP DATEBASE IF EXISTS movies_db; 
-CREATE DATABASE movies_db; 
+DROP DATEBASE IF EXISTS employees_db; 
+CREATE DATABASE employees_db; 
 
-USE movies_db;
+USE employees_db;
 
-CREATE TABLE movies (
+CREATE TABLE department (
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  movie_name VARCHAR(40) NOT NULL
+  name VARCHAR(30) NOT NULL
 );
 
-CREATE TABLE reviews (
+CREATE TABLE role (
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  movie_id INT, 
-  review TEXT NOT NULL,
-  FOREIGN KEY (movie_id) 
-  REFERENCES movies(id) 
+  title VARCHAR(30) NOT NULL, 
+  salary DECIMAL NOT NULL, 
+  department_id INT AUTO_INCREMENT NOT NULL, 
+  FOREIGN KEY (department_id)
+  REFERENCES deparment(id)
+  ON DELETE SET NULL
+);
+
+CREATE TABLE employee (
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  first_name VARCHAR(30) NOT NULL, 
+  last_name VARCHAR(30) NOT NULL, 
+  role_id INT NOT NULL AUTO_INCREMENT, 
+  manager_id INT AUTO_INCREMENT,  
+  FOREIGN KEY (role_id) 
+  REFERENCES role(id)
   ON DELETE SET NULL 
 );
