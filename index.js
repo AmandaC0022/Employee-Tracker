@@ -1,6 +1,7 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
 const cTable = require('console.table');
+const db = require('./db/schema.sql'); 
 
 mainScreen = () => { 
     inquirer
@@ -43,6 +44,15 @@ mainScreen = () => {
 
 viewAllEmployees = () => {
     //displays the employees table 
+    cTable([
+        {
+            name: 'foo',
+            age: 10
+        }, {
+            name: 'bar',
+            age: 20
+        }
+        ]);
     mainScreen(); 
 }; 
 
