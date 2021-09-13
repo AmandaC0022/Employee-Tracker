@@ -2,7 +2,7 @@ INSERT INTO department (name)
 VALUES 
     ("Engineering"), 
     ("Management"),
-    ('Sales'), 
+    ("Sales"), 
     ("Fiance"); 
 
 INSERT INTO role (title, salary, department_id)

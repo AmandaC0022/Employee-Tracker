@@ -4,17 +4,20 @@ const mysql = require('mysql2');
 const db = mysql.createConnection(
   {
     host: 'localhost',
-    // MySQL username,
     user: 'root',
-    // TODO: Add MySQL password
-    password: 'Thebig21',
-    database: 'employees_db'
+    password: 'admin',
+    database: 'employees_db',
   },
-  console.log(`Connected to the employees_db database.`)
+  console.log('Connected to the employees_db database.')
 );
 
+let sql = `SELECT * FROM department`; 
+
 // Query database
-db.query('SELECT * FROM department', function (err, results) {
+db.query(sql, function (err, results) {
+  if (err) {
+    console.error(err); 
+  }
     console.log(results);
 });
 

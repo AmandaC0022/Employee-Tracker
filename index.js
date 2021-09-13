@@ -1,5 +1,5 @@
 const inquirer = require('inquirer');
-const fs = require('fs');
+// const fs = require('fs');
 const cTable = require('console.table');
 const db = require('./db/schema.sql'); 
 
@@ -44,7 +44,7 @@ mainScreen = () => {
 
 viewAllEmployees = () => {
     //displays the employees table 
-    cTable([
+    console.table([
         {
             name: 'foo',
             age: 10
@@ -98,20 +98,3 @@ addDepartment = () => {
 
 //initializes the app 
 mainScreen(); 
-
-//console table syntax 
-//   console.table([
-//     {
-//       name: 'foo',
-//       age: 10
-//     }, {
-//       name: 'bar',
-//       age: 20
-//     }
-//   ]);
-  
-//   // prints
-//   name  age
-//   ----  ---
-//   foo   10
-//   bar   20
