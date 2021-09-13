@@ -1,7 +1,7 @@
 const inquirer = require('inquirer');
 // const fs = require('fs');
 const cTable = require('console.table');
-const allDepartments = require('./server'); 
+const db = require('./server'); 
 
 mainScreen = () => { 
     inquirer
@@ -44,15 +44,6 @@ mainScreen = () => {
 
 viewAllEmployees = () => {
     //displays the employees table 
-    console.table([
-        {
-            name: 'foo',
-            age: 10
-        }, {
-            name: 'bar',
-            age: 20
-        }
-        ]);
     mainScreen(); 
 }; 
 
@@ -87,6 +78,13 @@ addRole = () => {
 
 viewAllDepartments = () => {
     //this displays the department table 
+    db.query('SELECT * FROM department', function (err, results) {
+        if (err) {
+        console.error(err); 
+        }
+        var allDepartments = results; 
+        console.table('Departments', allDepartments.slice(0)); 
+    }); 
     mainScreen();
 }; 
 

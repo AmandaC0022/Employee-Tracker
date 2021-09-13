@@ -12,13 +12,14 @@ const db = mysql.createConnection(
   console.log('Connected to the employees_db database.')
 );
 
-// Shows the Department table from seeds file 
-db.query('SELECT * FROM department', function (err, results) {
-  if (err) {
-    console.error(err); 
-  }
-  var allDepartments = results; 
-  console.table('Departments', allDepartments.slice(0)); 
-}); 
-  
-// module.exports = allDepartments; 
+// Shows the Roles table from seeds file 
+//NOTE: you can filter what exactly is shown by changing * to title, salary, etc. 
+// db.query('SELECT * FROM role', function (err, results) {
+//   if (err) {
+//     console.error(err); 
+//   }
+//   var allRoles = results; 
+//   console.table('Roles', allRoles.slice(0)); 
+// });
+
+module.exports = db; 
