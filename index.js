@@ -1,7 +1,7 @@
 const inquirer = require('inquirer');
 // const fs = require('fs');
 const cTable = require('console.table');
-const db = require('./db/schema.sql'); 
+const db = require('./index'); 
 
 mainScreen = () => { 
     inquirer
