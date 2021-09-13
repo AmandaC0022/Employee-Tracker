@@ -44,15 +44,65 @@ mainScreen = () => {
 
 viewAllEmployees = () => {
     //displays the employees table 
+    db.query('SELECT * FROM employees', function (err, results) {
+        if (err) {
+            console.error(err); 
+        }
+        var allEmployees = results; 
+        console.table('Employees', allEmployees.slice(0)); 
+    }); 
     mainScreen(); 
 }; 
 
-addEmployee = () => {
-    //asks What is the employee's first name? 
-    //asks What is the employee's last name? 
-    //asks What is the employee's role? then give a list of all of the roles 
-    //asks Who is the employee's manager? then gives a list of all of the employees names. 
-    //validates then prints Added name to the database
+addEmployee = () => { 
+    inquirer
+    .prompt([
+        {
+            type: 'input',
+            name: 'first_name',
+            message: "What is the employee's first name?",
+            validate: answer => {
+                if (answer !== "") {
+                    return true; 
+                } 
+                return "Please enter at least one character."
+            } 
+        }, 
+        {
+            type: 'input',
+            name: 'last_name',
+            message: "What is the employee's last name?",
+            validate: answer => {
+                if (answer !== "") {
+                    return true; 
+                } 
+                return "Please enter at least one character."
+            }
+        }, 
+        {
+            type: 'list',
+            name: 'role',
+            message: "What is the employee's role?",
+            //Gives a list of all of the roles from the db  
+            choices: []
+        }, 
+        {
+            type: 'list',
+            name: 'managers_name',
+            message: "Who is the employee's manager?",
+            //Gives a list of all of the employees from the db 
+            choices: []
+        }
+    ]).then((answers) => {
+        //adds new employee to employee database 
+        fs.writeFile('./db/employees.sql', generatedb(answers), () => {
+            console.log(`${answers.first_name} ${answers.last_name} has been added to the database.`); 
+        })
+    }).catch((error) => {
+        if (error) {
+            console.error(error.message); 
+        }
+    }) 
     mainScreen();
 }; 
 
