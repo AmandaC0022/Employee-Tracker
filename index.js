@@ -106,10 +106,33 @@ addEmployee = () => {
     mainScreen();
 }; 
 
-updateEmployee = () => {
-    //asks Which employee's role do you want to update? then displays the list of employees
-    //asks Which role do you want to assign the selected employee? then gives a list of all of the roles 
-    //validates and prints Updated employee's role  
+updateEmployee = () => {  
+    inquirer
+    .prompt([
+        {
+            type: 'list',
+            name: 'employees_name',
+            message: "Which employee's role do you want to update?",
+            //displays the list of employees
+            choices: []
+        }, 
+        {
+            type: 'list',
+            name: 'employees_role',
+            message: "Which role do you want to assign the selected employee?",
+            //gives a list of all of the roles
+            choices: []
+        }
+    ]).then((answers) => {
+        //validates and prints Updated employee's role  
+        fs.writeFile('./db/employees.sql', generatedb(answers), () => {
+            console.log(`Thank you. ${answers.employees_name}'s role has been updated.`); 
+        })
+    }).catch((error) => {
+        if (error) {
+            console.error(error.message); 
+        }
+    }) 
     mainScreen();
 }; 
 
