@@ -12,26 +12,13 @@ const db = mysql.createConnection(
   console.log('Connected to the employees_db database.')
 );
 
-let sql = `SELECT * FROM department`; 
-
-// Query database
-db.query(sql, function (err, results) {
+// Shows the Department table from seeds file 
+db.query('SELECT * FROM department', function (err, results) {
   if (err) {
     console.error(err); 
   }
-  console.table([
-    {
-      department:results[0].name
-    },
-    {
-      department:results[1].name
-    },
-    {
-      department:results[2].name
-    }, 
-    {
-      department:results[3].name
-    }
-  ])
+  var allDepartments = results; 
+  console.table('Departments', allDepartments.slice(0)); 
 }); 
   
+// module.exports = allDepartments; 
