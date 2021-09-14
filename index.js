@@ -149,11 +149,48 @@ viewAllRoles = () => {
     mainScreen();
 }; 
 
-addRole = () => {
-    //asks what is the name of the role? 
-    //asks what is the salary of the role? 
-    //asks what department does the role belong to? and gives you the list of departments 
-    //validates then prints New role has been added to the database 
+addRole = () => {  
+    inquirer
+    .prompt([
+        {
+            type: 'input',
+            name: 'role_name',
+            message: "What is the name of the role?",
+            validate: answer => {
+                if (answer !== "") {
+                    return true; 
+                } 
+                return "Please enter at least one character."
+            } 
+        }, 
+        {
+            type: 'input',
+            name: 'salary',
+            message: "What is the salary of the role?",
+            validate: answer => {
+                if (answer !== "") {
+                    return true; 
+                } 
+                return "Please enter at least one number."
+            }
+        }, 
+        {
+            type: 'list',
+            name: 'department',
+            message: "What department does the role belong to?",
+            //Gives a list of all of the deparments from the db  
+            choices: []
+        }
+    ]).then((answers) => {
+        //adds new employee to employee database 
+        fs.writeFile('./db/employees.sql', generatedb(answers), () => {
+            console.log("Thank you. The new role has been added to the database."); 
+        })
+    }).catch((error) => {
+        if (error) {
+            console.error(error.message); 
+        }
+    }) 
     mainScreen();
 }; 
 
@@ -170,8 +207,29 @@ viewAllDepartments = () => {
 }; 
 
 addDepartment = () => {
-    //asks what is the name of the department? 
-    //validates the input then prints Added Department to the database 
+    inquirer
+    .prompt([
+        {
+            type: 'input',
+            name: 'department_name',
+            message: "What is the name of the department?",
+            validate: answer => {
+                if (answer !== "") {
+                    return true; 
+                } 
+                return "Please enter at least one character."
+            } 
+        }
+    ]).then((answers) => {
+        //adds new employee to employee database 
+        fs.writeFile('./db/employees.sql', generatedb(answers), () => {
+            console.log("Thank you. The new department has been added to the database."); 
+        })
+    }).catch((error) => {
+        if (error) {
+            console.error(error.message); 
+        }
+    })  
     mainScreen();
 }; 
 
