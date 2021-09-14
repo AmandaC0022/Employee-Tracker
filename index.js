@@ -1,7 +1,9 @@
 const inquirer = require('inquirer');
-// const fs = require('fs');
+const fs = require('fs');
 const cTable = require('console.table');
 const db = require('./server'); 
+const generateDepartment = require('./utils/generateDepartment'); 
+
 
 mainScreen = () => { 
     inquirer
@@ -222,15 +224,15 @@ addDepartment = () => {
         }
     ]).then((answers) => {
         //adds new employee to employee database 
-        fs.writeFile('./db/employees.sql', generatedb(answers), () => {
+        fs.writeFile('./db/employees.sql', generateDepartment(answers), () => {
             console.log("Thank you. The new department has been added to the database."); 
         })
+        mainScreen();
     }).catch((error) => {
         if (error) {
             console.error(error.message); 
         }
     })  
-    mainScreen();
 }; 
 
 //initializes the app 
