@@ -3,7 +3,7 @@ const fs = require('fs');
 const cTable = require('console.table');
 const db = require('./server'); 
 const generateDepartment = require('./utils/generateDepartment'); 
-
+const generateEmployee = require('./utils/generateEmployee'); 
 
 mainScreen = () => { 
     inquirer
@@ -97,15 +97,14 @@ addEmployee = () => {
         }
     ]).then((answers) => {
         //adds new employee to employee database 
-        fs.writeFile('./db/employees.sql', generatedb(answers), () => {
-            console.log(`${answers.first_name} ${answers.last_name} has been added to the database.`); 
-        })
+        fs.writeFile('./db/employees.sql', generateEmployee(answers), () => {})
+        console.log(`${answers.first_name} ${answers.last_name} has been added to the database.`);
+        mainScreen();
     }).catch((error) => {
         if (error) {
             console.error(error.message); 
         }
     }) 
-    mainScreen();
 }; 
 
 updateEmployee = () => {  
@@ -126,16 +125,15 @@ updateEmployee = () => {
             choices: []
         }
     ]).then((answers) => {
-        //validates and prints Updated employee's role  
-        fs.writeFile('./db/employees.sql', generatedb(answers), () => {
-            console.log(`Thank you. ${answers.employees_name}'s role has been updated.`); 
-        })
+        //adds new employee to the database file   
+        fs.writeFile('./db/employees.sql', generatedb(answers), () => {})
+        console.log(`Thank you. ${answers.employees_name}'s role has been updated.`);
+        mainScreen(); 
     }).catch((error) => {
         if (error) {
             console.error(error.message); 
         }
     }) 
-    mainScreen();
 }; 
 
 viewAllRoles = () => {
@@ -184,16 +182,15 @@ addRole = () => {
             choices: []
         }
     ]).then((answers) => {
-        //adds new employee to employee database 
-        fs.writeFile('./db/employees.sql', generatedb(answers), () => {
-            console.log("Thank you. The new role has been added to the database."); 
-        })
+        //adds new role to the database 
+        fs.writeFile('./db/employees.sql', generatedb(answers), () => {}); 
+        console.log("Thank you. The new role has been added to the database."); 
+        mainScreen(); 
     }).catch((error) => {
         if (error) {
             console.error(error.message); 
         }
     }) 
-    mainScreen();
 }; 
 
 viewAllDepartments = () => {
@@ -224,9 +221,8 @@ addDepartment = () => {
         }
     ]).then((answers) => {
         //adds new employee to employee database 
-        fs.writeFile('./db/employees.sql', generateDepartment(answers), () => {
-            console.log("Thank you. The new department has been added to the database."); 
-        })
+        fs.appendFileSync('./db/employees.sql', generateDepartment(answers), () => {}); 
+        console.log("Thank you. The new department has been added to the database.");
         mainScreen();
     }).catch((error) => {
         if (error) {
