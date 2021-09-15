@@ -154,9 +154,8 @@ updateEmployee = () => {
         }
     ]).then((answers) => {
         //adds new employee to the database file 
-        updateRole();   
-        console.log(`Thank you. ${answers.employees_name}'s role has been updated.`);
-        mainScreen(); 
+        console.log(answers); 
+        updateRole(answers);   
     }).catch((error) => {
         if (error) {
             console.error(error.message); 
