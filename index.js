@@ -53,9 +53,7 @@ viewAllEmployees = () => {
         if (err) {
             console.error(err); 
         }
-        console.log(" "); 
-        var allEmployees = results; 
-        console.table('Employees', allEmployees.slice(0)); 
+        console.table('\n','Employees', results.slice(0)); 
         mainScreen();
     });  
 }; 
@@ -113,7 +111,6 @@ addEmployee = () => {
         }
     ]).then((answers) => {
         generateEmployee(answers); 
-        mainScreen();
     }).catch((error) => {
         if (error) {
             console.error(error.message); 
@@ -154,7 +151,6 @@ updateEmployee = () => {
         }
     ]).then((answers) => {
         //adds new employee to the database file 
-        console.log(answers); 
         updateRole(answers);   
     }).catch((error) => {
         if (error) {
