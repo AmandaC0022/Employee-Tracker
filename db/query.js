@@ -14,6 +14,11 @@ class DB {
             "SELECT first_name, last_name, id FROM employees"
         )
     }
+    findAllDepartments(){
+        return this.connection.promise().query(
+            "SELECT * FROM departments"
+        )
+    }
 }
 
 module.exports = new DB(connection); 

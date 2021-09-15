@@ -6,7 +6,7 @@ const generateDepartment = require('./utils/generateDepartment');
 const generateEmployee = require('./utils/generateEmployee'); 
 const generateRole = require('./utils/generateRole'); 
 const connection = require('./db/query'); 
-
+const updateRole = require('./utils/updateRole'); 
 
 mainScreen = () => { 
     inquirer
@@ -123,6 +123,18 @@ addEmployee = () => {
 }; 
 
 updateEmployee = () => {  
+    connection.findAllEmployees().then(([rows]) => {
+        let employees = rows; 
+        const employeeChoices = employees.map(({ id, first_name, last_name }) => ({
+          name:first_name + " " + last_name,  
+          value:id,   
+        }))
+    connection.findAllRoles().then(([rows])=>{
+        let roles = rows; 
+        const roleChoices = roles.map(({ id, title })=> ({
+            name:title, 
+            value:id, 
+        }))
     inquirer
     .prompt([
         {
@@ -130,25 +142,27 @@ updateEmployee = () => {
             name: 'employees_name',
             message: "Which employee's role do you want to update?",
             //displays the list of employees
-            choices: []
+            choices: employeeChoices
         }, 
         {
             type: 'list',
             name: 'employees_role',
             message: "Which role do you want to assign the selected employee?",
             //gives a list of all of the roles
-            choices: []
+            choices: roleChoices
         }
     ]).then((answers) => {
-        //adds new employee to the database file   
-        // fs.writeFile('./db/employees.sql', generatedb(answers), () => {})
+        //adds new employee to the database file 
+        updateRole();   
         console.log(`Thank you. ${answers.employees_name}'s role has been updated.`);
         mainScreen(); 
     }).catch((error) => {
         if (error) {
             console.error(error.message); 
         }
-    }) 
+    });
+    }); 
+    }); 
 }; 
 
 viewAllRoles = () => {
@@ -165,6 +179,12 @@ viewAllRoles = () => {
 }; 
 
 addRole = () => {  
+    connection.findAllRoles().then(([rows])=>{
+        let departments = rows; 
+        const departmentChoices = departments.map(({ id, name })=> ({
+            name:name, 
+            value:id, 
+        }))
     inquirer
     .prompt([
         {
@@ -194,7 +214,7 @@ addRole = () => {
             name: 'department',
             message: "What department does the role belong to?",
             //Gives a list of all of the deparments from the db  
-            choices: ['Sale', 'Fiance', 'Development', 'Marketing']
+            choices: departmentChoices
         }
     ]).then((answers) => {
         //adds new role to the database 
@@ -203,16 +223,9 @@ addRole = () => {
         if (error) {
             console.error(error.message); 
         }
-    }) 
+    });  
+    }); 
 }; 
-
-//this will return all of the department's names
-// getDepartment = () => {
-//     db.query("SELECT name FROM department"), function (err, res){
-//         if(err) throw err; 
-//         console.log(res); 
-//     }
-// }
 
 viewAllDepartments = () => {
     //this displays the department table 
@@ -242,13 +255,8 @@ addDepartment = () => {
         }
     ]).then((answers) => {
         //adds new department to database 
-        db.query("INSERT INTO department SET ?", {
-            name:answers.department_name
-        }, function (err, result) {
-            if (err) throw err; 
-        });  
-        console.log("Thank you. The new department has been added to the database.");
-        mainScreen();
+        generateDepartment(); 
+        mainScreen(); 
     }).catch((error) => {
         if (error) {
             console.error(error.message); 
