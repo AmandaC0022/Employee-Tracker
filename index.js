@@ -60,14 +60,18 @@ viewAllEmployees = () => {
 }; 
 
 addEmployee = () => { 
-
     connection.findAllRoles().then(([rows])=>{
         let roles = rows; 
         const roleChoices = roles.map(({ id, title })=> ({
             name:title, 
             value:id, 
         }))
-
+    connection.findAllEmployees().then(([rows]) => {
+        let employees = rows; 
+        const employeeChoices = employees.map(({ id, first_name, last_name }) => ({
+          name:first_name + " " + last_name,  
+          value:id,   
+        }))
     inquirer
     .prompt([
         {
@@ -104,7 +108,7 @@ addEmployee = () => {
             name: 'managers_name',
             message: "Who is the employee's manager?",
             //Gives a list of all of the employees from the db 
-            choices: ['Joe Man', 'Me']
+            choices: employeeChoices
         }
     ]).then((answers) => {
         generateEmployee(answers); 
@@ -114,6 +118,7 @@ addEmployee = () => {
             console.error(error.message); 
         }
     }) 
+    }); 
     }); 
 }; 
 

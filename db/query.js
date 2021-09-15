@@ -9,7 +9,11 @@ class DB {
             "SELECT title, id FROM role"
         )
     }
-    
+    findAllEmployees(){
+        return this.connection.promise().query(
+            "SELECT first_name, last_name, id FROM employees"
+        )
+    }
 }
 
 module.exports = new DB(connection); 
