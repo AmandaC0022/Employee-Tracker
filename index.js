@@ -49,7 +49,7 @@ mainScreen = () => {
 
 viewAllEmployees = () => {
     //displays the employees table 
-    db.query("SELECT employees.id, employees.first_name AS 'First Name', employees.last_name AS 'Last Name', department.id, department.name AS Department, role.title AS 'Job Title', role.salary AS Salary, role.id, employees.manager_id AS Manager FROM employees LEFT JOIN role ON employees.role_id = role.id LEFT JOIN department ON role.department_id = department.id", function (err, results) {
+    db.query("SELECT employees.id, employees.first_name AS 'First Name', employees.last_name AS 'Last Name', department.name AS Department, role.title AS 'Job Title', role.salary AS Salary, employees.manager_id AS Manager FROM employees LEFT JOIN role ON employees.role_id = role.id LEFT JOIN department ON role.department_id = department.id", function (err, results) {
         if (err) {
             console.error(err); 
         }
@@ -168,7 +168,7 @@ updateEmployee = () => {
 
 viewAllRoles = () => {
     // Shows the Roles table from the database 
-    db.query("SELECT role.id, role.title AS 'Job Title', department.name AS Department, role.salary AS Salary, department.id FROM role LEFT JOIN department on role.department_id = department.id", function (err, results) {
+    db.query("SELECT role.id, role.title AS 'Job Title', department.name AS Department, role.salary AS Salary FROM role LEFT JOIN department ON role.department_id = department.id", function (err, results) {
         if (err) {
             console.error(err); 
         }
@@ -190,10 +190,12 @@ addRole = () => {
             type: 'input',
             name: 'role_name',
             message: "What is the name of the role?",
+            //checks to make sure the input field is not empty
             validate: answer => {
                 if (answer !== "") {
                     return true; 
                 } 
+                //if the input is empty it will display this message 
                 return "Please enter at least one character."
             } 
         }, 
