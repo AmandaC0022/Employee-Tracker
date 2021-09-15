@@ -49,14 +49,15 @@ mainScreen = () => {
 
 viewAllEmployees = () => {
     //displays the employees table 
-    db.query('SELECT * FROM employees', function (err, results) {
+    db.query("SELECT employees.id, employees.first_name AS 'First Name', employees.last_name AS 'Last Name', department.id, department.name AS Department, role.title AS 'Job Title', role.salary AS Salary, role.id, employees.manager_id AS Manager FROM employees LEFT JOIN role ON employees.role_id = role.id LEFT JOIN department ON role.department_id = department.id", function (err, results) {
         if (err) {
             console.error(err); 
         }
+        console.log(" "); 
         var allEmployees = results; 
         console.table('Employees', allEmployees.slice(0)); 
-    }); 
-    mainScreen(); 
+        mainScreen();
+    });  
 }; 
 
 addEmployee = () => { 
@@ -167,15 +168,16 @@ updateEmployee = () => {
 
 viewAllRoles = () => {
     // Shows the Roles table from seeds file 
-    // NOTE: you can filter what exactly is shown by changing * to title, salary, etc. 
-    db.query('SELECT * FROM role', function (err, results) {
+    db.query("SELECT employees.id, employees.first_name AS 'First Name', employees.last_name AS 'Last Name', role.title AS 'Job Title', role.id FROM employees LEFT JOIN role on employees.role_id = role.id", function (err, results) {
         if (err) {
             console.error(err); 
         }
         var allRoles = results; 
+        //adds some whitespace to display things better 
+        console.log(" ")
         console.table('Roles', allRoles.slice(0)); 
+        mainScreen();
         }); 
-    mainScreen();
 }; 
 
 addRole = () => {  
@@ -234,9 +236,12 @@ viewAllDepartments = () => {
         console.error(err); 
         }
         var allDepartments = results; 
+        //this gives some white space so the table displays better 
+        console.log(" "); 
         console.table('Departments', allDepartments.slice(0)); 
+        //calls the main screen again 
+        mainScreen();
     }); 
-    mainScreen();
 }; 
 
 addDepartment = () => {
