@@ -1,7 +1,14 @@
+const db = require('../server'); 
+
 const generateEmployee = (answers) => {
-    return `INSERT INTO employees (first_name, last_name, role_id)
-    VALUES
-        ("${answers.first_name}", "${answers.last_name}", "${answers.role}")`
+    //adds new employee to employee database 
+    db.query("INSERT INTO employees SET ?", {
+        first_name:answers.first_name, 
+        last_name:answers.last_name
+    }, function (err){
+        if(err) throw err; 
+        console.log(`${answers.first_name} ${answers.last_name} has been added to the database.`);
+    });
 }; 
 
 module.exports = generateEmployee; 

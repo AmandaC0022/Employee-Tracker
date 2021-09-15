@@ -4,6 +4,7 @@ const cTable = require('console.table');
 const db = require('./server'); 
 const generateDepartment = require('./utils/generateDepartment'); 
 const generateEmployee = require('./utils/generateEmployee'); 
+const generateRole = require('./utils/generateRole'); 
 
 mainScreen = () => { 
     inquirer
@@ -177,18 +178,25 @@ addRole = () => {
             name: 'department',
             message: "What department does the role belong to?",
             //Gives a list of all of the deparments from the db  
-            choices: []
+            choices: ['Sale', 'Fiance', 'Development', 'Marketing']
         }
     ]).then((answers) => {
         //adds new role to the database 
-        console.log("Thank you. The new role has been added to the database."); 
-        mainScreen(); 
+        generateRole(answers);  
     }).catch((error) => {
         if (error) {
             console.error(error.message); 
         }
     }) 
 }; 
+
+//this will return all of the department's names
+// getDepartment = () => {
+//     db.query("SELECT name FROM department"), function (err, res){
+//         if(err) throw err; 
+//         console.log(res); 
+//     }
+// }
 
 viewAllDepartments = () => {
     //this displays the department table 
@@ -218,10 +226,11 @@ addDepartment = () => {
         }
     ]).then((answers) => {
         //adds new department to database 
-        db.query("INSERT INTO department (name) VALUES ?", ('answers.deparment_name'), function (err, result) {
+        db.query("INSERT INTO department SET ?", {
+            name:answers.department_name
+        }, function (err, result) {
             if (err) throw err; 
         });  
-        // fs.appendFileSync('./db/employees.sql', generateDepartment(answers), () => {}); 
         console.log("Thank you. The new department has been added to the database.");
         mainScreen();
     }).catch((error) => {
@@ -230,13 +239,6 @@ addDepartment = () => {
         }
     })  
 }; 
-
-// from stack overflow: 
-// .then(function ({ first_name, last_name, manager }) {
-//            connection.query("INSERT INTO employee (first_name, last_name, manager) 
-//             VALUES ?", ('first_name', 'last_name', 'manager'), function (err, result) {
-//            if (err) throw err;
-// })
 
 //initializes the app 
 mainScreen(); 
