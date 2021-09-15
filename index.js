@@ -234,11 +234,8 @@ viewAllDepartments = () => {
     db.query('SELECT * FROM department', function (err, results) {
         if (err) {
         console.error(err); 
-        }
-        var allDepartments = results; 
-        //this gives some white space so the table displays better 
-        console.log(" "); 
-        console.table('Departments', allDepartments.slice(0)); 
+        } 
+        console.table('\n', 'Departments', results.slice(0)); 
         //calls the main screen again 
         mainScreen();
     }); 
