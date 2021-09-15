@@ -260,8 +260,7 @@ addDepartment = () => {
         }
     ]).then((answers) => {
         //adds new department to database 
-        generateDepartment(); 
-        mainScreen(); 
+        generateDepartment(answers);  
     }).catch((error) => {
         if (error) {
             console.error(error.message); 
