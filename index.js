@@ -5,6 +5,8 @@ const db = require('./server');
 const generateDepartment = require('./utils/generateDepartment'); 
 const generateEmployee = require('./utils/generateEmployee'); 
 const generateRole = require('./utils/generateRole'); 
+const connection = require('./db/query'); 
+
 
 mainScreen = () => { 
     inquirer
@@ -58,6 +60,14 @@ viewAllEmployees = () => {
 }; 
 
 addEmployee = () => { 
+
+    connection.findAllRoles().then(([rows])=>{
+        let roles = rows; 
+        const roleChoices = roles.map(({ id, title })=> ({
+            name:title, 
+            value:id, 
+        }))
+
     inquirer
     .prompt([
         {
@@ -87,7 +97,7 @@ addEmployee = () => {
             name: 'role',
             message: "What is the employee's role?",
             //Gives a list of all of the roles from the db  
-            choices: ['Web Developer', 'Salesperson']
+            choices: roleChoices
         }, 
         {
             type: 'list',
@@ -104,6 +114,7 @@ addEmployee = () => {
             console.error(error.message); 
         }
     }) 
+    }); 
 }; 
 
 updateEmployee = () => {  
