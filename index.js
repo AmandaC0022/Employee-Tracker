@@ -167,15 +167,12 @@ updateEmployee = () => {
 }; 
 
 viewAllRoles = () => {
-    // Shows the Roles table from seeds file 
-    db.query("SELECT employees.id, employees.first_name AS 'First Name', employees.last_name AS 'Last Name', role.title AS 'Job Title', role.id FROM employees LEFT JOIN role on employees.role_id = role.id", function (err, results) {
+    // Shows the Roles table from the database 
+    db.query("SELECT role.id, role.title AS 'Job Title', department.name AS Department, role.salary AS Salary, department.id FROM role LEFT JOIN department on role.department_id = department.id", function (err, results) {
         if (err) {
             console.error(err); 
         }
-        var allRoles = results; 
-        //adds some whitespace to display things better 
-        console.log(" ")
-        console.table('Roles', allRoles.slice(0)); 
+        console.table('\n', 'Roles', results.slice(0)); 
         mainScreen();
         }); 
 }; 
@@ -183,8 +180,8 @@ viewAllRoles = () => {
 addRole = () => {  
     connection.findAllRoles().then(([rows])=>{
         let departments = rows; 
-        const departmentChoices = departments.map(({ id, name })=> ({
-            name:name, 
+        const departmentChoices = departments.map(({ id, title })=> ({
+            name:title, 
             value:id, 
         }))
     inquirer

@@ -16,7 +16,7 @@ class DB {
     }
     findAllDepartments(){
         return this.connection.promise().query(
-            "SELECT * FROM departments"
+            "SELECT name, id FROM department"
         )
     }
 }
